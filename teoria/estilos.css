@@ -1,0 +1,29 @@
+body {
+    background: #f4f6fb;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #222;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    max-width: 500px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    padding: 32px 24px;
+}
+h1 {
+    text-align: center;
+    color: #3a6ea5;
+    margin-bottom: 24px;
+}
+.dias {
+    font-size: 1.1em;
+    line-height: 2;
+    letter-spacing: 1px;
+}
+.error {
+    color: #d32f2f;
+    font-weight: bold;
+}

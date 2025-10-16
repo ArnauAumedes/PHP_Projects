@@ -1,0 +1,181 @@
+@import url('https://fonts.googleapis.com/css?family=Saira+Semi+Condensed&display=swap');
+
+* {
+    font-family: 'Saira Semi Condensed', sans-serif;
+    transition: all 0.5s ease;
+    box-sizing: border-box;
+}
+
+body {
+    background: #dfdfdf;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 100%;
+    height: 100vh;
+    padding: 0 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+form {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+form div,
+form label,
+form input,
+form textarea {
+    width: 100%;
+}
+
+.field:nth-of-type(2) {
+    margin: 16px 0;
+}
+
+label,
+input,
+textarea {
+    padding: 8px;
+}
+
+label,
+input::placeholder,
+textarea::placeholder {
+    color: #555;
+}
+
+label i {
+    margin: 0 10px 0 0;
+}
+
+.field:focus-within label {
+    color: #000;
+    letter-spacing: 2px;
+}
+
+input,
+textarea {
+    background: rgba(255, 255, 255, 0.5);
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: 'Saira Semi Condensed', sans-serif;
+    transition: all 0.5s ease;
+}
+
+input:focus,
+textarea:focus {
+    background: rgba(255, 255, 255, 1);
+    box-shadow: none;
+    outline: none;
+}
+
+textarea {
+    resize: none;
+    min-height: 100px;
+}
+
+textarea::-webkit-scrollbar {
+    width: 0;
+}
+
+button,
+input[type="submit"] {
+    background: #2f4ad0;
+    padding: 8px 16px;
+    margin: 16px 0 50px 0;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: 'Saira Semi Condensed', sans-serif;
+    transition: all 0.5s ease;
+}
+
+button:hover,
+input[type="submit"]:hover {
+    letter-spacing: 2px;
+    box-shadow: none;
+    transform: translateY(-1px);
+}
+
+.social-media {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.social-media:not(.social-media) {
+    font-size: 14px;
+}
+
+.social-media span {
+    font-size: 16px;
+}
+
+.social-media span .fas {
+    margin: 0 0 0 10px;
+}
+
+.social-media a {
+    color: #000;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+/* Estilos específicos para tu estructura HTML actual */
+form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+}
+
+/* Mejorar espaciado para tu HTML */
+form > *:not(br) {
+    margin-bottom: 10px;
+}
+
+br {
+    display: block;
+    margin: 8px 0;
+}
+
+.error {
+    color: #e74c3c;
+    font-size: 12px;
+    margin-top: 4px;
+    display: block;
+}
+
+/* Responsive */
+@media (max-width: 425px) {
+    form {
+        width: 100%;
+        margin: 0 10px;
+    }
+}
+
+/* Efecto glassmorphism para un look más moderno */
+form {
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
