@@ -9,7 +9,7 @@ if (session_status() === PHP_SESSION_NONE) {
 // Netejar dades de sessió
 $_SESSION = [];
 
-// Eliminar cookie de sessió si s'usa cookies
+// Eliminar cookie de sessió si s'utilitza cookies
 if (ini_get('session.use_cookies')) {
     $params = session_get_cookie_params();
     setcookie(session_name(), '', time() - 42000,

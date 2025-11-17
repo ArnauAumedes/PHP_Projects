@@ -89,6 +89,9 @@ class UserDAO extends User
                     'email' => $user['email']
                 ];
 
+                // Preparar missatge flash de benvinguda (es mostrarà una sola vegada al header)
+                $_SESSION['flash_welcome'] = $user['username'] ?? ($user['email'] ?? 'Usuari');
+
                 // Redirigir al menú / pàgina principal
                 header('Location: /practicas/Pràctica 03 - Paginació/public/index.php?action=menu');
                 exit;

@@ -114,15 +114,25 @@
                             </form>
                         </div>
                         <div class="col-sm-6">
-                            <a href="?action=create" data-toggle="tooltip" title="Login" class="btn btn-success"><i
-                                    class="material-icons">&#xE147;</i>
-                                <span>Login</span></a>
-                            <a href="?action=update" data-toggle="tooltip" title="Actualitzar Article"
-                                class="btn btn-warning"><i class="material-icons">&#xE254;</i>
-                                <span>Actualitzar</span></a>
-                            <a href="/practicas/Pràctica 03 - Paginació/app/vista/delete.php" data-toggle="tooltip"
-                                title="Eliminar Article" class="btn btn-danger"><i class="material-icons">&#xE15C;</i>
-                                <span>Eliminar</span></a>
+                            <?php
+                            // Aseguramos que las funciones de autenticación estén disponibles.
+                            require_once __DIR__ . '/../model/components/auth.php';
+                            if (isLoggedIn()):
+                            ?>
+                                <a href="?action=create" data-toggle="tooltip" title="Crear" class="btn btn-success"><i
+                                        class="material-icons">&#xE147;</i>
+                                    <span>Crear</span></a>
+                                <a href="?action=update" data-toggle="tooltip" title="Actualitzar Article"
+                                   class="btn btn-warning"><i class="material-icons">&#xE254;</i>
+                                    <span>Actualitzar</span></a>
+                                <a href="/practicas/Pràctica 03 - Paginació/app/vista/delete.php" data-toggle="tooltip"
+                                   title="Eliminar Article" class="btn btn-danger"><i class="material-icons">&#xE15C;</i>
+                                    <span>Eliminar</span></a>
+                            <?php else: ?>
+                                <div class="text-right">
+                                    <span class="text-white">Inicia sessió per crear, actualitzar o eliminar articles</span>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

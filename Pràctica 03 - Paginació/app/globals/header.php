@@ -49,7 +49,7 @@ $username = $user['username'] ?? null;
                         <a class="nav-link text-white" href="#"><?php echo htmlspecialchars($username ?? 'Usuari'); ?></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="/practicas/Pràctica 03 - Paginació/public/index.php?action=logout">Logout</a>
+                        <a class="nav-link text-white logout-link" href="/practicas/Pràctica 03 - Paginació/public/index.php?action=logout">Logout</a>
                     </li>
                 <?php else: ?>
                     <li class="nav-item">
@@ -65,5 +65,29 @@ $username = $user['username'] ?? null;
 </nav>
 
 <?php
+// Mostrar popup de benvinguda (flash) si existeix
+if (!empty($_SESSION['flash_welcome'])) {
+    $fw = $_SESSION['flash_welcome'];
+    unset($_SESSION['flash_welcome']);
+    $msg = 'Bienvenido ' . $fw;
+    $json = json_encode($msg);
+    echo "<script>window.addEventListener('load', function(){ alert($json); });</script>";
+}
+// Añadir confirmación al logout
+$logoutName = json_encode($username ?? '');
+echo '<script>' . "\n" .
+    'document.addEventListener("DOMContentLoaded", function(){' . "\n" .
+    '  var name = ' . $logoutName . ';' . "\n" .
+    '  document.querySelectorAll(".logout-link").forEach(function(el){' . "\n" .
+    '    el.addEventListener("click", function(e){' . "\n" .
+    '      e.preventDefault();' . "\n" .
+    '      if (confirm("Seguro que quieres salir " + name + "?")) {' . "\n" .
+    '        window.location = this.href;' . "\n" .
+    '      }' . "\n" .
+    '    });' . "\n" .
+    '  });' . "\n" .
+    '});' . "\n" .
+    '</script>';
 // end header
 ?>
+

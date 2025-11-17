@@ -11,7 +11,7 @@ if ($action === 'login') {
 if ($action === 'logout') {
 	// Simple logout endpoint handled by public script or controller
 	// If you want to centralize, you can create app/controlador/logoutController.php
-	require_once __DIR__ . '/logout.php';
+	require_once __DIR__ . '/../app/controlador/logoutController.php';
 	exit;
 }
 
