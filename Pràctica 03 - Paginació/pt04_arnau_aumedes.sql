@@ -18,6 +18,21 @@ CREATE TABLE `articles` (
   `data_modificacio` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+-- Estructura de tabla para la tabla `users`
+-- (simple table for authentication; passwords stored as password_hash)
+--
+
+CREATE TABLE IF NOT EXISTS `users` (
+  `user_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(100) NOT NULL,
+  `email` VARCHAR(255) NOT NULL UNIQUE,
+  `password_hash` VARCHAR(255) NOT NULL,
+  `active` TINYINT(1) NOT NULL DEFAULT 1,
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 -- Volcado de datos para la tabla `articles`
 
 INSERT INTO `articles` (`id`, `dni`, `titol`, `cos`, `data_creacio`, `data_modificacio`) VALUES
@@ -43,6 +58,13 @@ INSERT INTO `articles` (`id`, `dni`, `titol`, `cos`, `data_creacio`, `data_modif
 (20, '13580246R', 'Tècniques de SEO per al 2025', 'Consells pràctics per posicionar contingut en motors de cerca seguint les últimes tendències.', '2025-10-22 15:42:27', '2025-10-22 15:42:27'),
 (21, '24691357S', 'El paper del disseny UX en l’èxit d’una aplicació', 'Com una bona experiència d’usuari pot augmentar la retenció i la satisfacció.', '2025-10-22 15:42:27', '2025-10-22 15:42:27'),
 (22, '35702468T', 'La revolució del 5G', 'Analitzem com la connectivitat d’alta velocitat canviarà la manera com interactuem amb la tecnologia.', '2025-10-22 15:42:27', '2025-10-22 15:42:27');
+
+INSERT INTO `users`(`user_id`, `username`, `email`, `password_hash`, `active`, `created_at`) VALUES
+('101', 'usuario1', 'usuario1@example.com', '$2y$10$joWmJvece7Q.tg018cEbfOa2rDdqjCPX/W0pP3bGl4WqZrTdN1Ehe', 1, NOW()),
+('102', 'usuario2', 'usuario2@example.com', '$2y$10$joWmJvece7Q.tg018cEbfOa2rDdqjCPX/W0pP3bGl4WqZrTdN1Ehe', 1, NOW()),
+('103', 'usuario3', 'usuario3@example.com', '$2y$10$joWmJvece7Q.tg018cEbfOa2rDdqjCPX/W0pP3bGl4WqZrTdN1Ehe', 1, NOW()),
+('104', 'usuario4', 'usuario4@example.com', '$2y$10$joWmJvece7Q.tg018cEbfOa2rDdqjCPX/W0pP3bGl4WqZrTdN1Ehe', 1, NOW()),
+('105', 'usuario5', 'usuario5@example.com', '$2y$10$joWmJvece7Q.tg018cEbfOa2rDdqjCPX/W0pP3bGl4WqZrTdN1Ehe', 1, NOW());
 
 -- Índices para tablas volcadas
 
