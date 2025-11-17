@@ -35,7 +35,6 @@ class ArticleDAO extends Article
      * i l'insereix a la taula 'articles' utilitzant prepared statements.
      * 
      * @return int|false ID del nou article creat (lastInsertId) o false en cas d'error
-     * @throws PDOException Si hi ha errors en la inserció a la base de dades
      */
     public function create()
     {

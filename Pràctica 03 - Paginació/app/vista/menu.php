@@ -16,6 +16,11 @@
 </head>
 
 <body>
+    <header>
+        <?php
+        require_once __DIR__ . '/../globals/header.php';
+        ?>
+    </header>
     <div class="container-xl">
         <div class="table-responsive">
             <div class="table-wrapper">
@@ -109,9 +114,9 @@
                             </form>
                         </div>
                         <div class="col-sm-6">
-                            <a href="?action=create" data-toggle="tooltip" title="Afegir Nou Article"
-                                class="btn btn-success"><i class="material-icons">&#xE147;</i>
-                                <span>Afegir Nou Article</span></a>
+                            <a href="?action=create" data-toggle="tooltip" title="Login" class="btn btn-success"><i
+                                    class="material-icons">&#xE147;</i>
+                                <span>Login</span></a>
                             <a href="?action=update" data-toggle="tooltip" title="Actualitzar Article"
                                 class="btn btn-warning"><i class="material-icons">&#xE254;</i>
                                 <span>Actualitzar</span></a>
@@ -224,6 +229,15 @@
                     $('[data-toggle="tooltip"]').tooltip();
                 });
             </script>
+        </div>
+    </div>
+
 </body>
+
+<footer>
+    <?php
+    require_once __DIR__ . '/../globals/footer.php';
+    ?>
+</footer>
 
 </html>
