@@ -31,8 +31,8 @@
             <div class="col-sm-6 col-md-4 item">
                 <h3>USEFUL LINKS</h3>
                 <ul>
-                    <li><a href="/practicas/Pràctica 03 - Paginació/app/vista/menu.php">Home</a></li>
-                    <li><a href="/practicas/Pràctica 03 - Paginació/app/vista/menu.php">Register</a></li>
+                    <li><a href="/practicas/Pràctica 03 - Paginació/public/index.php">Home</a></li>
+                    <li><a href="/practicas/Pràctica 03 - Paginació/app/vista/register.php">Register</a></li>
                     <li><a href="/practicas/Pràctica 03 - Paginació/app/vista/login.php">Login</a></li>
                 </ul>
             </div>

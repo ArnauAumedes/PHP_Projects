@@ -39,14 +39,14 @@ class UserDAO extends User
                 return;
             }
 
-            // $db debe venir de ../model/database/database.php (PDO). Ajusta si usas otra variable.
-            if (!isset($db) || !($db instanceof PDO)) {
+            // La connexió PDO s'ha de passar al constructor i estar en $this->db
+            if (!isset($this->db) || !($this->db instanceof PDO)) {
                 echo '<div class="alert alert-danger">Error de configuració: connexió a la BD no trobada.</div>';
                 return;
             }
 
             try {
-                $stmt = $db->prepare('SELECT id, username, email, password_hash, active FROM users WHERE email = :email LIMIT 1');
+                $stmt = $this->db->prepare('SELECT user_id, username, email, password_hash, active FROM users WHERE email = :email LIMIT 1');
                 $stmt->execute([':email' => $email]);
                 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -55,8 +55,23 @@ class UserDAO extends User
                     return;
                 }
 
-                // Verificar contrasenya (assumeix password_hash() a l'registre)
-                if (!password_verify($password, $user['password_hash'])) {
+                // Determinar quina columna guarda la contrasenya (password_hash o password)
+                $hashColumn = null;
+                if (isset($user['password_hash'])) {
+                    $hashColumn = 'password_hash';
+                } elseif (isset($user['password'])) {
+                    $hashColumn = 'password';
+                }
+
+                if ($hashColumn === null) {
+                    // Mostrar keys per ajudar a depurar (temporal)
+                    $cols = implode(', ', array_keys($user));
+                    echo '<div class="alert alert-danger">Error al verificar la contrasenya: la fila d\'usuari no conté cap columna de contrasenya coneguda. Columnes: ' . htmlspecialchars($cols) . '</div>';
+                    return;
+                }
+
+                // Verificar contrasenya
+                if (!password_verify($password, $user[$hashColumn])) {
                     echo '<div class="alert alert-danger">Credencials incorrectes.</div>';
                     return;
                 }
@@ -69,7 +84,7 @@ class UserDAO extends User
 
                 // Login correcte: guardar dades en sessió
                 $_SESSION['user'] = [
-                    'id' => $user['id'],
+                    'user_id' => $user['user_id'],
                     'username' => $user['username'],
                     'email' => $user['email']
                 ];
@@ -78,8 +93,10 @@ class UserDAO extends User
                 header('Location: /practicas/Pràctica 03 - Paginació/public/index.php?action=menu');
                 exit;
             } catch (Exception $e) {
-                // No exposar l'error real en producció
+                // Mostrar missatge genèric per a l'usuari i el missatge d'error real per a debug
                 echo '<div class="alert alert-danger">Error del servidor. Torna a intentar-ho més tard.</div>';
+                // Debug (temporal): mostrar excepció per ajudar a localitzar el problema
+                echo '<div class="alert alert-warning"><small>Debug: ' . htmlspecialchars($e->getMessage()) . '</small></div>';
                 error_log('Login error: ' . $e->getMessage());
                 return;
             }

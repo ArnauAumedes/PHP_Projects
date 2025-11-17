@@ -1,4 +1,20 @@
 <?php
+// Front controller: route by ?action=
+$action = $_GET['action'] ?? 'menu';
+
+if ($action === 'login') {
+	// Delegate login handling to the dedicated controller
+	require_once __DIR__ . '/../app/controlador/loginController.php';
+	exit;
+}
+
+if ($action === 'logout') {
+	// Simple logout endpoint handled by public script or controller
+	// If you want to centralize, you can create app/controlador/logoutController.php
+	require_once __DIR__ . '/logout.php';
+	exit;
+}
+
 require_once __DIR__ . '/../app/controlador/ArticleController.php';
 
 $controller = new ArticleController();

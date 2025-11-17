@@ -32,10 +32,12 @@
 						<div class="login-card p-4">
 							<h4 class="mb-3 text-center">Inicia sessió</h4>
 							<?php
-							include_once("../model/database/database.php");
-							include_once("../model/dao/UserDAO.php");
+							// Mensatges o errors generats pel controlador (si existeixen)
+							echo $messages ?? '';
+
+
 							?>
-							<form method="post" action="">
+							<form method="post" action="/practicas/Pràctica 03 - Paginació/public/index.php?action=login">
 								<div class="form-group">
 									<label for="email">Email</label>
 									<input id="email" name="email" type="text" name="email" class="form-control" autofocus>
