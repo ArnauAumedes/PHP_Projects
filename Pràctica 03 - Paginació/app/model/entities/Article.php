@@ -17,9 +17,13 @@ class Article
     public $id;
     
     /**
-     * @var string DNI de l'autor de l'article
+     * @var int|null ID de l'usuari creador de l'article
      */
-    private $dni;
+    private $user_id;
+    /**
+     * @var string|null Nom d'usuari (autor) per mostrar al frontend
+     */
+    private $author_name;
     
     /**
      * @var string Títol de l'article
@@ -37,15 +41,16 @@ class Article
      * Inicialitza un nou article amb els valors proporcionats.
      * L'ID es deixa null ja que s'assigna automàticament per la BD.
      * 
-     * @param string $dni DNI de l'autor de l'article
+     * @param int|null $user_id ID de l'usuari creador
      * @param string $titol Títol de l'article
      * @param string $cos Contingut complet de l'article
      */
-    public function __construct($dni, $titol, $cos)
+    public function __construct($user_id, $titol, $cos)
     {
-        $this->dni = $dni;
+        $this->user_id = $user_id;
         $this->titol = $titol;
         $this->cos = $cos;
+        $this->author_name = null;
     }
 
     // ==================== GETTERS ====================
@@ -61,13 +66,23 @@ class Article
     }
 
     /**
-     * Obté el DNI de l'autor
+     * Obté l'ID de l'usuari creador
      * 
-     * @return string DNI de l'autor de l'article
+     * @return int|null ID de l'usuari o null
      */
-    public function getDni()
+    public function getUserId()
     {
-        return $this->dni;
+        return $this->user_id;
+    }
+
+    /**
+     * Obté el nom d'usuari autor (si està disponible)
+     *
+     * @return string|null Nom d'usuari o null
+     */
+    public function getAuthorName()
+    {
+        return $this->author_name;
     }
 
     /**
@@ -104,14 +119,25 @@ class Article
     }
 
     /**
-     * Estableix el DNI de l'autor
+     * Estableix l'ID de l'usuari autor
      * 
-     * @param string $dni DNI de l'autor de l'article
+     * @param int|null $user_id ID de l'usuari
      * @return void
      */
-    public function setDni($dni)
+    public function setUserId($user_id)
     {
-        $this->dni = $dni;
+        $this->user_id = $user_id;
+    }
+
+    /**
+     * Estableix el nom d'usuari autor (opcional)
+     * 
+     * @param string $name Nom d'usuari
+     * @return void
+     */
+    public function setAuthorName($name)
+    {
+        $this->author_name = $name;
     }
 
     /**

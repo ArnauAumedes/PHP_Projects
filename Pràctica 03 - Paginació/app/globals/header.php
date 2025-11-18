@@ -56,7 +56,7 @@ $username = $user['username'] ?? null;
                         <a class="nav-link text-white" href="/practicas/Pràctica 03 - Paginació/public/index.php?action=login">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="#">Register</a>
+                        <a class="nav-link text-white" href="/practicas/Pràctica 03 - Paginació/public/index.php?action=register">Register</a>
                     </li>
                 <?php endif; ?>
             </ul>

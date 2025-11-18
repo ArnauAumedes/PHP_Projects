@@ -47,10 +47,7 @@
                             <input type="text" id="id_display" class="form-control" value="<?php echo htmlspecialchars($article->getId()); ?>" readonly>
                         </div>
 
-                        <div class="form-group">
-                            <label for="dni_update">DNI:</label>
-                            <input type="text" name="dni" id="dni_update" class="form-control" value="<?php echo htmlspecialchars($article->getDni()); ?>" required>
-                        </div>
+                        <!-- Article author is assigned automatically; cannot be edited here -->
                         
                         <div class="form-group">
                             <label for="titol">Títol:</label>

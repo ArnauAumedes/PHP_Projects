@@ -102,13 +102,13 @@
                                 <select name="per_page" id="per_page"
                                     onchange="document.getElementById('perPageForm').submit()">
                                     <?php
-                                    $options = [1, 5, 10, 20];
-                                    $currentPerPage = $perPage ?? 5;
-                                    foreach ($options as $option) {
-                                        $selected = ($option == $currentPerPage) ? 'selected' : '';
-                                        echo "<option value=\"$option\" $selected>$option</option>";
-                                    }
-                                    ?>
+                                        $options = [1, 6, 12, 22];
+                                        $currentPerPage = $perPage ?? 6;
+                                        foreach ($options as $option) {
+                                            $selected = ($option == $currentPerPage) ? 'selected' : '';
+                                            echo "<option value=\"$option\" $selected>$option</option>";
+                                        }
+                                        ?>
                                 </select>
                                 <input type="hidden" name="page" value="1">
                             </form>
@@ -137,27 +137,40 @@
                     </div>
                 </div>
 
-                <!-- Div amb llistat d'articles -->
-                <div id="articles-list">
-                    <table class="table table-striped table-hover">
-                        <tbody>
-                            <?php if (isset($error_message)): ?>
-                                <!-- existing error row -->
-                            <?php elseif (empty($articles)): ?>
-                                <!-- existing empty row -->
-                            <?php else: ?>
-                                <?php foreach ($articles as $article): ?>
-                                    <tr>
-                                        <td><?php echo htmlspecialchars($article->getId()); ?></td>
-                                        <td><?php echo htmlspecialchars($article->getTitol()); ?></td>
-                                        <td><?php echo htmlspecialchars(substr(trim($article->getCos()), 0, 50)) . (strlen($article->getCos()) > 50 ? '...' : ''); ?>
-                                        </td>
-                                        <td><?php echo htmlspecialchars($article->getDni()); ?></td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
+                <!-- Div amb llistat d'articles (grid de targetes) -->
+                <div id="articles-list" class="container-fluid">
+                    <?php if (isset($error_message)): ?>
+                        <div class="alert alert-danger"><?php echo htmlspecialchars($error_message); ?></div>
+                    <?php elseif (empty($articles)): ?>
+                        <div class="alert alert-info">No hi ha articles per mostrar.</div>
+                    <?php else: ?>
+                        <div class="row">
+                            <?php foreach ($articles as $article): ?>
+                                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                                    <div class="article-card">
+                                        <div class="article-card-header text-center">
+                                            <h5 class="mb-1 article-title"><?php echo htmlspecialchars($article->getTitol()); ?></h5>
+                                            <div class="article-meta small text-muted"><?php echo htmlspecialchars($article->getAuthorName() ?? $article->getUserId()); ?></div>
+                                        </div>
+                                        <div class="article-body p-3">
+                                            <p class="mb-2 text-truncate-3"><?php echo nl2br(htmlspecialchars($article->getCos())); ?></p>
+                                        </div>
+                                        <div class="article-actions border-top p-2 d-flex justify-content-between">
+                                            <div>
+                                                <a href="?action=view&id=<?php echo urlencode($article->getId()); ?>" class="btn btn-sm btn-outline-secondary">Veure</a>
+                                            </div>
+                                            <div>
+                                                <?php if (isLoggedIn() && $_SESSION['user']['user_id'] == ($article->getUserId() ?? null)): ?>
+                                                    <a href="?action=update&id=<?php echo urlencode($article->getId()); ?>" class="btn btn-sm btn-warning">Actualitzar</a>
+                                                    <a href="?action=delete&id=<?php echo urlencode($article->getId()); ?>" class="btn btn-sm btn-danger delete-link">Eliminar</a>
+                                                <?php endif; ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
             <!-- Div amb controls anterior/següent i selector per pàgines -->
@@ -167,7 +180,7 @@
                         <?php
                         $currentPage = $currentPage ?? 1;
                         $totalPages = $totalPages ?? 1;
-                        $perPage = $perPage ?? 5;
+                        $perPage = $perPage ?? 6;
 
                         // Enllaços prev/next simples
                         $prev = max(1, $currentPage - 1);

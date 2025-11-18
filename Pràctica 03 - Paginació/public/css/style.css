@@ -402,3 +402,44 @@ table.table .avatar {
   .footer-dark .social-icons { margin-top: 10px; }
   .footer-dark .item { margin-bottom: 20px; }
 }
+
+  /* Article card styles (approximate Tailwind look using existing Bootstrap) */
+  .article-card {
+    background: #ffffff;
+    border-radius: 6px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.06);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    /* Fixed size for uniform cards */
+    width: 320px;
+    height: 360px;
+    border: 1px solid #e6edf3; /* subtle border to differentiate cards */
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .article-card-header {
+    background: #2d3a45; /* dark header */
+    color: #fff;
+    padding: 14px 12px;
+    /* keep header compact so body has room */
+  }
+  .article-avatar { display:flex; align-items:center; justify-content:center; }
+  .article-avatar .avatar-svg { width:64px; height:64px; color:#ffffff; border-radius:50%; background:rgba(255,255,255,0.06); padding:8px; }
+  .article-title { color: #fff; font-weight:600; font-size:1.05rem; }
+  .article-meta { color: rgba(255,255,255,0.85); }
+  .article-body { flex: 1 1 auto; overflow: hidden; }
+  .article-body p { color: #333; margin:0; }
+  .article-actions { background: #f8f9fa; }
+  .article-actions { align-self: stretch; }
+  .article-actions .btn { margin-left: 6px; }
+  .text-truncate-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+
+  /* Small responsive tweak for cards */
+  @media (max-width: 576px) {
+    .article-card { width: 100%; }
+    .article-card-header { padding: 12px; }
+  }
+
+  /* Ensure text inside body truncates nicely to fit fixed height */
+  .text-truncate-3 { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }

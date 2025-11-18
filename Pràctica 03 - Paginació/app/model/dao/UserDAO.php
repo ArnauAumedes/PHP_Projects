@@ -10,6 +10,87 @@ class UserDAO extends User
     }
 
     /**
+     * Processa el formulari de registre
+     * - Valida dades
+     * - Comprova si l'usuari ja existeix
+     * - Hashea la contrasenya i insereix l'usuari
+     */
+    public function processRegister()
+    {
+        // Sessió amb cookie de 40 minuts
+        if (session_status() === PHP_SESSION_NONE) {
+            ini_set('session.cookie_lifetime', 2400);
+            ini_set('session.gc_maxlifetime', 2400);
+            session_set_cookie_params(2400);
+            session_start();
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['btnRegister'])) {
+            $username = trim($_POST['username'] ?? '');
+            $email = trim($_POST['email'] ?? '');
+            $password = $_POST['password'] ?? '';
+            $password2 = $_POST['password2'] ?? '';
+
+            // Validacions bàsiques
+            if ($username === '' || $email === '' || $password === '' || $password2 === '') {
+                echo '<div class="alert alert-danger">Tots els camps són obligatoris</div>';
+                return;
+            }
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                echo '<div class="alert alert-danger">Email invàlid</div>';
+                return;
+            }
+            if ($password !== $password2) {
+                echo '<div class="alert alert-danger">Les contrasenyes no coincideixen</div>';
+                return;
+            }
+            // Comprovar força de la contrasenya (mínim 8, lletres + números)
+            if (strlen($password) < 8 || !preg_match('/[A-Z]/i', $password) || !preg_match('/[0-9]/', $password)) {
+                echo '<div class="alert alert-danger">La contrasenya ha de tenir almenys 8 caràcters i incloure lletres i números</div>';
+                return;
+            }
+
+            // Comprovar si existeix usuari per email
+            try {
+                $check = $this->db->prepare('SELECT user_id FROM users WHERE email = :email LIMIT 1');
+                $check->execute([':email' => $email]);
+                if ($check->fetch()) {
+                    echo '<div class="alert alert-danger">Ja existeix un usuari amb aquest email</div>';
+                    return;
+                }
+
+                    // Hashear password
+                    $hash = password_hash($password, PASSWORD_DEFAULT);
+
+                    // Insert into users without dni column (dni does not exist in this schema)
+                    $stmt = $this->db->prepare('INSERT INTO users (username, email, password_hash, active) VALUES (:username, :email, :password_hash, 1)');
+                    $stmt->execute([
+                        ':username' => $username,
+                        ':email' => $email,
+                        ':password_hash' => $hash
+                    ]);
+
+                // Login automàtic després de registrar
+                $userId = $this->db->lastInsertId();
+                session_regenerate_id(true);
+                $_SESSION['user'] = [
+                    'user_id' => $userId,
+                    'username' => $username,
+                    'email' => $email
+                ];
+                $_SESSION['flash_welcome'] = $username;
+                header('Location: /practicas/Pràctica 03 - Paginació/public/index.php?action=menu');
+                exit;
+            } catch (Exception $e) {
+                echo '<div class="alert alert-danger">Error del servidor. Torna-ho a intentar més tard.</div>';
+                echo '<div class="alert alert-warning"><small>Debug: ' . htmlspecialchars($e->getMessage()) . '</small></div>';
+                error_log('Register error: ' . $e->getMessage());
+                return;
+            }
+        }
+    }
+
+    /**
      * Processa el formulari de login
      * 
      * Valida les credencials i inicia la sessió si són correctes.
@@ -20,7 +101,11 @@ class UserDAO extends User
     public function processLogin()
     {
         // Procesamiento del formulario de login
+        // Aseguramos una sesión con cookie de 40 minutos (2400s)
         if (session_status() === PHP_SESSION_NONE) {
+            ini_set('session.cookie_lifetime', 2400);
+            ini_set('session.gc_maxlifetime', 2400);
+            session_set_cookie_params(2400);
             session_start();
         }
 
@@ -83,10 +168,13 @@ class UserDAO extends User
                 }
 
                 // Login correcte: guardar dades en sessió
+                // Regenerar id de sessió per seguretat
+                session_regenerate_id(true);
                 $_SESSION['user'] = [
                     'user_id' => $user['user_id'],
                     'username' => $user['username'],
-                    'email' => $user['email']
+                    'email' => $user['email'],
+                    'dni' => $user['dni'] ?? null
                 ];
 
                 // Preparar missatge flash de benvinguda (es mostrarà una sola vegada al header)

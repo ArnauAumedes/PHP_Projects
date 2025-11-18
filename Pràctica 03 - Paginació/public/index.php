@@ -15,6 +15,11 @@ if ($action === 'logout') {
 	exit;
 }
 
+if ($action === 'register') {
+	require_once __DIR__ . '/../app/controlador/registerController.php';
+	exit;
+}
+
 require_once __DIR__ . '/../app/controlador/ArticleController.php';
 
 $controller = new ArticleController();

@@ -206,13 +206,13 @@ class ArticleController
     private function showMenu()
     {
         // Obtenir els parametres de paginació
-        $allowed = [1,5,10,20];
-        // Default a 5 si no és vàlid
-        $perPage = isset($_GET['per_page']) ? (int) $_GET['per_page'] : 5;
+        $allowed = [1,6,12,22];
+        // Default a 6 si no és vàlid
+        $perPage = isset($_GET['per_page']) ? (int) $_GET['per_page'] : 6;
         if (!in_array($perPage, $allowed)) {
-            $perPage = 5;
+            $perPage = 6;
             if (isset($_GET['per_page'])) {
-                header("Location: /practicas/Pràctica 03 - Paginació/public/index.php?per_page=5");
+                header("Location: /practicas/Pràctica 03 - Paginació/public/index.php?per_page=6");
             }
         }
 
